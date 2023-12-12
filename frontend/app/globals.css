@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 box-border p-0;
+  @apply text-primary-content;
+}
+
+body {
+  @apply bg-primary;
+  @apply overflow-y-scroll;
+}
+
+input {
+  @apply outline-none;
+}
+
+.container {
+  @apply bg-white sm:rounded-lg;
+}
+
+/* form formik */
+
+form input {
+  @apply rounded-lg border p-2;
+}
+
+form .input {
+  @apply relative;
+}
+
+form .input .error {
+  @apply absolute ml-2 text-xs text-red-500;
+}
+
+form select {
+  @apply rounded-lg border p-2 outline-none;
+}
+
+/*end form formik */
