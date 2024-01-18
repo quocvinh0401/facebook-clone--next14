@@ -5,11 +5,15 @@ import { UserModule } from './user.module';
 import { AuthModule } from './auth.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from 'config/configuration';
+import { FileModule } from './file.module';
+import { CloudinaryModule } from './cloudinary.module';
 
 @Module({
   imports: [
     AuthModule,
+    CloudinaryModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    FileModule,
     UserModule,
   ],
   controllers: [AppController],

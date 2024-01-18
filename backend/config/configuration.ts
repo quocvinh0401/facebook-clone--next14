@@ -6,4 +6,9 @@ export default () =>
     .security({
       jwt: { secret: process.env.JWT_SECRET },
     })
+    .cloudinary({
+      apiKey: process.env.CLOUDINARY_API_KEY,
+      apiSecret: process.env.CLOUDINARY_API_SECRET,
+      cloudName: process.env.CLOUDINARY_NAME,
+    })
     .build();
