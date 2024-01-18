@@ -18,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ToastProvider>
-        <ReduxProvider>
-          <body className={inter.className}>{children}</body>
-        </ReduxProvider>
-      </ToastProvider>
+      <body className={inter.className}>
+        <ToastProvider>
+          <ReduxProvider>{children}</ReduxProvider>
+        </ToastProvider>
+      </body>
     </html>
   );
 }

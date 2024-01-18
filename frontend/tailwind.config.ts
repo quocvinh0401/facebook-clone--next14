@@ -23,10 +23,18 @@ const config: Config = {
         "secondary-content": "#65676B",
         "secondary-button": "#e3e6eb",
         hover: "#0000000d",
+        "content-button-disabled": "#bcc0c4",
+        divider: "#ced0d4",
+        "card-flat": "#f7f8fa",
+        "hover-overlay": "rgba(0,0,0,.05)",
       },
       fontSize: {
         s: "13px",
         m: "15px",
+        l: "17px",
+      },
+      boxShadow: {
+        lg: "0 0 16px 1px rgba(0,0,0,.3)",
       },
     },
   },

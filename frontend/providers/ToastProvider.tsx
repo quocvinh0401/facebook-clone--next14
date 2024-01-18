@@ -5,7 +5,11 @@ import "react-toastify/dist/ReactToastify.css";
 const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
+      <ToastContainer
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        autoClose={3000}
+      />
       {children}
     </>
   );

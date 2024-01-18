@@ -114,3 +114,38 @@ export const usePost = <T>(..._paths: (string | ApiOptions)[]) => {
   return async (...pathsAndParams: (string | Partial<T>)[]): Promise<T | {}> =>
     await api(...pathsAndParams);
 };
+
+export const usePatch = <T>(..._paths: (string | ApiOptions)[]) => {
+  const paths = [] as string[];
+  let options: ApiOptions = {};
+  _paths.forEach((e) => {
+    if (typeof e == "string") paths.push(e);
+    else options = e;
+  });
+  const api = useApi("patch", options, ...paths);
+
+  return async (...pathsAndParams: (string | Partial<T>)[]): Promise<T | {}> =>
+    await api(...pathsAndParams);
+};
+
+export const useUploadFile = (..._paths: string[]) => {
+  const auth = useSelector((state: RootState) => state.auth);
+
+  const apiBaseUrl = process.env.NEXT_PUBLIC_BACKEND_LISTEN;
+  const requestConfig: AxiosRequestConfig = {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  if (auth.jwt) {
+    requestConfig.headers!.Authorization = `Bearer ${auth.jwt}`;
+  }
+
+  const paths = apiBaseUrl + "/" + _paths.join("/");
+  return async (data: FormData) => {
+    const response = await axios(paths, { ...requestConfig, data });
+    return response.data;
+  };
+};

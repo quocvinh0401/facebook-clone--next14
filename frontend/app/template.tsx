@@ -7,10 +7,11 @@ import { RootState } from "~/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Cookie from "js-cookie";
 import { useGet } from "~/hooks/use-api";
-import { setAuthentication, setCurrentUser } from "~/redux/slices/auth.slice";
+import { setAuthentication, setAuth } from "~/redux/slices/auth.slice";
 import { Builder } from "builder-pattern";
 import { Auth } from "~/interface/auth.interface";
 import { User } from "~/interface/user.interface";
+import { setUser } from "~/redux/slices/user.slice";
 
 const Template = ({ children }: { children: React.ReactNode }) => {
   const auth = useSelector((state: RootState) => state.auth);
@@ -22,12 +23,10 @@ const Template = ({ children }: { children: React.ReactNode }) => {
     if (token) {
       const getCurrentUser = async () => {
         dispatch(setAuthentication(token));
-        console.log("jwt-------->>", auth.jwt);
         try {
           const user = (await getAuth("current-user")) as User;
-          dispatch(
-            setCurrentUser(Builder<Auth>().user(user).jwt(token).build()),
-          );
+          dispatch(setAuth(Builder<Auth>().user(user).jwt(token).build()));
+          dispatch(setUser(user));
         } catch (error) {}
       };
       getCurrentUser();
