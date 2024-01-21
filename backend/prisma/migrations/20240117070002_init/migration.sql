@@ -11,6 +11,8 @@ CREATE TABLE "User" (
     "gender" VARCHAR(1) NOT NULL,
     "loginFail" INTEGER,
     "lastLogin" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "post_audience_type" VARCHAR NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

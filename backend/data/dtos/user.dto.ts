@@ -1,3 +1,5 @@
+import { PostAudienceType } from 'data/enum/post.enum';
+
 export class UserDTO {
   id: number;
   email: string;
@@ -10,4 +12,6 @@ export class UserDTO {
   avatar: string;
   lastLogin: Date;
   loginFail: number;
+  created_at: Date;
+  post_audience_type: PostAudienceType;
 }

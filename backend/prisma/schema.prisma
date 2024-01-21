@@ -22,4 +22,88 @@ model User {
   gender String @db.VarChar(1)
   loginFail Int?
   lastLogin DateTime?
+  created_at DateTime @default(now())
+  post_audience_type PostAudienceType
+
+  posts Post[]
+  comment PostComment?
+  like PostLike?
+}
+
+model Post {
+  id Int @default(autoincrement()) @id
+  caption String
+  type PostType
+  audience PostAudienceType
+  count_like Int @default(0)
+  count_comment Int @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id Int
+  user User? @relation(fields: [user_id], references: [id])
+
+  likes PostLike[]
+  comments PostComment[]
+
+  medias PostMedia[]
+}
+
+model PostMedia {
+  id Int @default(autoincrement()) @id
+  type String
+  url String
+  created_at DateTime @default(now())
+  caption String
+
+  post_id Int
+  post Post @relation(fields: [post_id], references: [id])
+}
+
+model PostLike {
+  id Int @default(autoincrement()) @id
+  type LikeType
+  isLike Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  postId Int
+  post Post @relation(fields: [postId], references: [id])
+  user_id Int @unique
+  user User @relation(fields: [user_id], references: [id])
+}
+
+model PostComment {
+  id Int @default(autoincrement()) @id
+  content String
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  post_id Int
+  post Post @relation(fields: [post_id], references: [id])
+  user_id Int @unique
+  user User @relation(fields: [user_id], references: [id])
+}
+
+enum PostAudienceType {
+  PUBLIC
+  FRIEND
+  EXCEPT
+  SPECIFIC 
+  ONLY_ME 
+}
+
+enum PostType {
+  NORMAL
+  VIDEO
+}
+
+enum LikeType {
+  LIKE
+  LOVE
+  CARE
+  HAHA
+  WOW
+  SAD
+  ANGRY
 }

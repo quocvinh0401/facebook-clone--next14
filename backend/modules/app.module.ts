@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from 'config/configuration';
 import { FileModule } from './file.module';
 import { CloudinaryModule } from './cloudinary.module';
+import { PostModule } from './post.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CloudinaryModule } from './cloudinary.module';
     CloudinaryModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     FileModule,
+    PostModule,
     UserModule,
   ],
   controllers: [AppController],

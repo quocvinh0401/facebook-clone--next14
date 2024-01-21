@@ -22,17 +22,15 @@ export const authSlice = createSlice({
       delete state.user;
       Cookies.remove("access");
     },
-    setCurrentUser: (state, action: PayloadAction<Auth>) => {
+    setAuth: (state, action: PayloadAction<Auth>) => {
       state.user = action.payload.user;
       state.isAuthenticated = true;
     },
     setAuthentication: (state, action: PayloadAction<string>) => {
       state.jwt = action.payload;
-      console.log("state---->>", state.jwt);
     },
   },
 });
 
-export const { login, logout, setCurrentUser, setAuthentication } =
-  authSlice.actions;
+export const { login, logout, setAuth, setAuthentication } = authSlice.actions;
 export default authSlice.reducer;

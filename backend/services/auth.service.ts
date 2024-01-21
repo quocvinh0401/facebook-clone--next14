@@ -10,6 +10,7 @@ import { isEmail, isPhone } from 'utils/utility';
 import { JwtService } from '@nestjs/jwt';
 import { Builder } from 'builder-pattern';
 import { Payload } from 'security/payload';
+import { PostAudienceType } from 'data/enum/post.enum';
 
 @Injectable()
 export class AuthService extends Service {
@@ -47,6 +48,7 @@ export class AuthService extends Service {
           gender,
           password: hashPassword,
           phone,
+          post_audience_type: PostAudienceType.PUBLIC,
         },
       })) as unknown as User;
 
@@ -122,7 +124,7 @@ export class AuthService extends Service {
       const where = {};
       if (dto.phone) where['phone'] = dto.phone;
       if (dto.email) where['email'] = dto.email;
-      const user = await this.prisma.user.findFirstOrThrow({ where });
+      const user = (await this.prisma.user.findFirstOrThrow({ where })) as User;
       return this.mapper.toDTO(user);
     } catch (error) {
       throw new BadRequestException('Your login is expired');

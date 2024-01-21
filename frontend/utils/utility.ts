@@ -1,4 +1,5 @@
 import clsx, { ClassValue } from "clsx";
+import dayjs from "dayjs";
 import { twMerge } from "tailwind-merge";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
@@ -66,4 +67,26 @@ export const serialize = (obj: any, prefix?: string): string => {
     }
   }
   return str.join("&");
+};
+
+export const changeFormNumber = (number: number) => {
+  return number > 1000 ? Math.round(number / 100) / 10 + "k" : number;
+};
+
+export const changeFormDate = (date: Date) => {
+  const time = (new Date().getTime() - new Date(date).getTime()) / 1000; //second
+
+  if (time < 60) return `${Math.round(time)}s`;
+  else if (time < 60 * 60) return `${Math.round(time / 60)}m`;
+  else if (time < 60 * 60 * 24)
+    return `${Math.round(time / 60 / 60)} hour${
+      Math.round(time / 60 / 60) == 1 ? "" : "s"
+    } ago`;
+  else if (time < 60 * 60 * 24 * 7)
+    return `${Math.round(time / 60 / 60 / 24)} day${
+      Math.round(time / 60 / 60 / 24) != 1 ? "s" : ""
+    } ago`;
+  else if (date.getFullYear() == new Date().getFullYear())
+    return dayjs(date).format(`MMM D at m:s A`);
+  else return dayjs(date).format(`MMM D, YYYY`);
 };
