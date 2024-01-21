@@ -98,7 +98,7 @@ export const useGet = <T>(..._paths: (string | ApiOptions)[]) => {
   });
   const api = useApi("get", options, ...paths);
 
-  return async (...pathsAndParams: (string | Partial<T>)[]): Promise<T | {}> =>
+  return async (...pathsAndParams: (string | Partial<T>)[]): Promise<T> =>
     await api(...pathsAndParams);
 };
 
