@@ -13,7 +13,14 @@ const HeaderDefault = () => {
     <div className="sticky top-0 z-50 flex bg-white px-2 shadow">
       <div className="flex h-[55px] flex-1 items-center py-2">
         <Link href={"/"}>
-          <Image src={"/images/logo.png"} alt="logo" width={115} height={40} />
+          <Image
+            src={"/images/logo.png"}
+            alt="logo"
+            width={115}
+            height={40}
+            className="h-auto w-auto
+            "
+          />
         </Link>
         <div className="flex items-center space-x-2 rounded-full bg-primary p-2">
           <Image src={"/svgs/search.svg"} alt="search" width={20} height={20} />

@@ -4,7 +4,7 @@ import MenuLeft from "./MenuLeft";
 
 const HomePage = () => {
   return (
-    <div className="relative flex justify-center md:justify-between">
+    <div className="flex justify-center md:justify-between">
       <MenuLeft />
       <Body />
       <Contact />

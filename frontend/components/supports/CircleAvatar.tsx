@@ -1,24 +1,24 @@
 import Image from "next/image";
 
 interface Props {
-  src: string;
+  src?: string;
   size?: number;
 }
 
 const CircleAvatar = ({ src, size = 2.5 }: Props) => {
   return (
-    <button
-      className="relative overflow-hidden rounded-full"
+    <div
+      className="relative cursor-pointer overflow-hidden rounded-full"
       style={{ width: `${size}rem`, height: `${size}rem` }}
     >
       <Image
-        src={src}
+        src={src || "/images/avatar.jpg"}
         alt="avatar"
         fill
         sizes="100%"
         style={{ objectFit: "cover" }}
       />
-    </button>
+    </div>
   );
 };
 export default CircleAvatar;
