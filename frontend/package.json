@@ -16,6 +16,7 @@
     "builder-pattern": "^2.2.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
+    "fbemitter": "^3.0.0",
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
     "next": "14.0.1",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/fbemitter": "^2.0.35",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -9,7 +9,7 @@ interface Props {
 const GridMedia = ({ medias }: Props) => {
   return (
     <div className="grid gap-1">
-      <MediaCard media={medias[0]} />
+      {medias[0] && <MediaCard media={medias[0]} />}
       {medias.length > 1 && (
         <div className="flex gap-1">
           {medias.slice(1, 4).map((media, index) => (
@@ -43,7 +43,7 @@ const MediaCard = ({ media }: { media: PostMedia }) => {
       className="h-full w-full object-cover"
     />
   ) : (
-    <video controls>
+    <video controls className="w-full">
       <source src={media.url} type={media.type} />
     </video>
   );

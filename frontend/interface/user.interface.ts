@@ -1,6 +1,7 @@
 import { PostAudienceType } from "./post.interface";
 
 export interface User {
+  id: number;
   first_name: string;
   surname: string;
   phone: string;

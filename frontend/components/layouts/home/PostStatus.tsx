@@ -25,6 +25,7 @@ import { cn } from "~/utils/utility";
 import { HiPencil } from "react-icons/hi";
 import { TbPhotoPlus, TbX } from "react-icons/tb";
 import GridMedia from "~/components/supports/GridMedia";
+import { emitter } from "~/utils/emitter";
 
 const PostStatus = () => {
   const { user } = useSelector((state: RootState) => state.user);
@@ -93,7 +94,6 @@ const CreatePost = () => {
 
   const upload = useUploadFile("files");
   const postPost = usePost("post", { alert: { isUsed: false } });
-
   const chooseMedia = async (e: any) => {
     const files = e.target.files;
     if (files) {
@@ -144,7 +144,8 @@ const CreatePost = () => {
       .medias(medias)
       .build();
 
-    await postPost(_post);
+    const response = await postPost(_post);
+    emitter.emit("add-post", response);
 
     dispatch(
       setModal({
@@ -211,7 +212,7 @@ const CreatePost = () => {
             <div className="relative">
               {post.medias?.length != 0 ? (
                 <div className="group overflow-hidden rounded-lg">
-                  <GridMedia medias={post.medias!} />
+                  {post.medias && <GridMedia medias={post.medias!} />}
                   <div className="absolute left-0 top-0 hidden h-full w-full items-start gap-3 rounded-lg bg-black/10 p-3 group-hover:flex">
                     <button
                       className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 hover:opacity-80"
@@ -457,8 +458,8 @@ const EditMedia = () => {
       >
         {medias?.map((media, index) => (
           <div key={index} className="overflow-hidden rounded-lg shadow-sm">
-            <div className="relative flex justify-center">
-              {media.type == MediaType.IMAGE ? (
+            <div className="relative flex min-w-[450px] justify-center">
+              {media.type.startsWith(MediaType.IMAGE.toLowerCase()) ? (
                 <>
                   <Image
                     src={media.url}

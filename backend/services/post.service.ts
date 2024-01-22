@@ -6,6 +6,7 @@ import { whereUser } from 'utils/utility';
 import { Builder } from 'builder-pattern';
 import { PostMediaDTO } from 'data/dtos/post.media.dto';
 import { PostAudienceType } from '@prisma/client';
+import { PostLikeDTO } from 'data/dtos/post.like.dto';
 
 @Injectable()
 export class PostService {
@@ -59,6 +60,11 @@ export class PostService {
           },
         },
         medias: true,
+        likes: {
+          where: {
+            is_like: true,
+          },
+        },
       },
       orderBy: {
         created_at: 'desc',
@@ -66,5 +72,59 @@ export class PostService {
     });
 
     return posts;
+  }
+
+  async handleLike(dto: PostLikeDTO) {
+    const post = await this.prismaService.post.findUnique({
+      where: {
+        id: dto.post_id,
+      },
+    });
+
+    if (dto.id) {
+      const like = await this.prismaService.postLike.findUnique({
+        where: {
+          id: dto.id,
+        },
+      });
+      if (dto.is_like != like.is_like) {
+        await this.prismaService.post.update({
+          where: {
+            id: post.id,
+          },
+          data: {
+            count_like: dto.is_like ? post.count_like + 1 : post.count_like - 1,
+          },
+        });
+      }
+      return await this.prismaService.postLike.update({
+        data: {
+          type: dto.type,
+          is_like: dto.is_like,
+        },
+        where: {
+          id: dto.id,
+        },
+      });
+    } else {
+      const newLike = await this.prismaService.postLike.create({
+        data: {
+          type: dto.type,
+          is_like: dto.is_like,
+          user_id: dto.user_id,
+          post_id: dto.post_id,
+        },
+      });
+
+      await this.prismaService.post.update({
+        where: {
+          id: post.id,
+        },
+        data: {
+          count_like: post.count_like + 1,
+        },
+      });
+      return newLike;
+    }
   }
 }
