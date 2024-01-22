@@ -26,8 +26,8 @@ model User {
   post_audience_type PostAudienceType
 
   posts Post[]
-  comment PostComment?
-  like PostLike?
+  comments PostComment[]
+  likes PostLike[]
 }
 
 model Post {
@@ -63,14 +63,14 @@ model PostMedia {
 model PostLike {
   id Int @default(autoincrement()) @id
   type LikeType
-  isLike Boolean
+  is_like Boolean
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  postId Int
-  post Post @relation(fields: [postId], references: [id])
-  user_id Int @unique
-  user User @relation(fields: [user_id], references: [id])
+  post_id Int 
+  post Post @relation(fields: [post_id], references: [id])
+  user_id Int
+  user User? @relation(fields: [user_id], references: [id]) 
 }
 
 model PostComment {
@@ -81,8 +81,8 @@ model PostComment {
 
   post_id Int
   post Post @relation(fields: [post_id], references: [id])
-  user_id Int @unique
-  user User @relation(fields: [user_id], references: [id])
+  user_id Int 
+  user User? @relation(fields: [user_id], references: [id])
 }
 
 enum PostAudienceType {
