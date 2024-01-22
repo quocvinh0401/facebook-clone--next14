@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import RegisterForm from "./RegisterForm";
+import { Builder } from "builder-pattern";
 import Image from "next/image";
+import { KeyboardEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { usePost } from "~/hooks/use-api";
-import { useDispatch, useSelector } from "react-redux";
+import { Auth } from "~/interface/auth.interface";
 import { User } from "~/interface/user.interface";
 import { login } from "~/redux/slices/auth.slice";
-import { Builder } from "builder-pattern";
-import { Auth } from "~/interface/auth.interface";
 import { RootState } from "~/redux/store";
+import RegisterForm from "./RegisterForm";
 
 const LoginPage = () => {
   const [loginForm, setLoginForm] = useState({ login: "", password: "" });
@@ -26,12 +26,19 @@ const LoginPage = () => {
       toast.error("Please fill all fields");
       return;
     }
-    const [jwt, user] = (await postAuth("sign-in", loginForm)) as [
-      string,
-      User,
-    ];
-    dispatch(login(Builder<Auth>().jwt(jwt).user(user).build()));
-    console.log(auth);
+    try {
+      const [jwt, user] = (await postAuth("sign-in", loginForm)) as [
+        string,
+        User,
+      ];
+      dispatch(login(Builder<Auth>().jwt(jwt).user(user).build()));
+    } catch (error) {}
+  };
+
+  const submitLogin = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code == "Enter") {
+      handleLogin();
+    }
   };
 
   return (
@@ -51,6 +58,7 @@ const LoginPage = () => {
           className="rounded-lg border p-2 px-4 focus:border-secondary"
           placeholder="Email address or phone number"
           autoFocus
+          onKeyDown={(e) => submitLogin(e)}
           onChange={(e) =>
             setLoginForm({ ...loginForm, login: e.target.value })
           }
@@ -60,6 +68,7 @@ const LoginPage = () => {
             type={`${showPassword ? "text" : "password"}`}
             className="w-full rounded-lg border p-2 pl-4 pr-10 focus:border-secondary"
             placeholder="Password"
+            onKeyDown={(e) => submitLogin(e)}
             onChange={(e) =>
               setLoginForm({ ...loginForm, password: e.target.value })
             }
