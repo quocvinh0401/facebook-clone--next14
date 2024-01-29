@@ -107,3 +107,25 @@ enum LikeType {
   SAD
   ANGRY
 }
+
+model Notification {
+  id Int @default(autoincrement()) @id
+  type NotificationType
+  data Json
+  status NotificationStatus @default(UNSEEN_AND_UNREAD)
+  url String?
+  notifiers Int[]
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+enum NotificationType {
+  REACT_POST
+  COMMENT_POST
+}
+
+enum NotificationStatus {
+  UNSEEN_AND_UNREAD
+  SEEN_AND_UNREAD
+  SEEN_AND_READ
+}

@@ -1,3 +1,6 @@
+import { Builder } from 'builder-pattern';
+import { NotificationDataObjectType } from 'data/enum/notification.enum';
+import { Notification } from 'data/interfaces/notification.interface';
 import { Payload } from 'security/payload';
 
 export const isEmail = (str: string) => {
@@ -16,4 +19,17 @@ export const whereUser = (payload: Payload): any => {
   if (payload.phone) where['phone'] = payload.phone;
 
   return where;
+};
+
+export const ms = (data: any) => Builder<MessageEvent>().data(data).build();
+
+export const getUrlNotification = (notification: Notification): string => {
+  const directObjectType = notification.data.direct_object.type;
+  let url = '';
+
+  if (directObjectType == NotificationDataObjectType.POST) {
+    url = `/posts/${notification.data.direct_object.id}`;
+  }
+
+  return url;
 };
