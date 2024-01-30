@@ -90,3 +90,7 @@ export const changeFormDate = (date: Date) => {
     return dayjs(date).format(`MMM D at m:s A`);
   else return dayjs(date).format(`MMM D, YYYY`);
 };
+
+export const isActiveNav = (current: string, pathname: string) => {
+  return current == pathname;
+};

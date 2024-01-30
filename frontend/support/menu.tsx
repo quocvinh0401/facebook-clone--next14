@@ -11,7 +11,15 @@ import {
   PostAudience,
   PostAudienceType,
 } from "~/interface/post.interface";
-import { Emoji } from "~/interface/support.interface";
+import { Emoji, NavItem } from "~/interface/support.interface";
+import {
+  MdOutlineHome,
+  MdHome,
+  MdOutlineVideoLibrary,
+  MdVideoLibrary,
+  MdVideogameAsset,
+  MdOutlineVideogameAsset,
+} from "react-icons/md";
 
 export const postAudiences: PostAudience[] = [
   Builder<PostAudience>()
@@ -44,32 +52,53 @@ export const postAudiences: PostAudience[] = [
 export const emojis: Emoji[] = [
   Builder<Emoji>()
     .title("Like")
-    .gif("/gif/like.gif")
+    .gif("/gif/emoji/like.gif")
     .type(LikeType.LIKE)
-    .icon("/images/emoji/like.png")
+    .icon("/images/emoji/like.gif")
     .build(),
   Builder<Emoji>()
     .title("Care")
-    .gif("/gif/care.gif")
+    .gif("/gif/emoji/care.gif")
     .type(LikeType.CARE)
-    .icon("/images/emoji/care.png")
+    .icon("/images/emoji/care.gif")
     .build(),
   Builder<Emoji>()
     .title("Wow")
-    .gif("/gif/wow.gif")
+    .gif("/gif/emoji/wow.gif")
     .type(LikeType.WOW)
-    .icon("/images/emoji/wow.png")
+    .icon("/images/emoji/wow.gif")
     .build(),
   Builder<Emoji>()
     .title("Haha")
-    .gif("/gif/haha.gif")
+    .gif("/gif/emoji/haha.gif")
     .type(LikeType.HAHA)
-    .icon("/images/emoji/haha.png")
+    .icon("/images/emoji/haha.gif")
     .build(),
   Builder<Emoji>()
     .title("Angry")
-    .gif("/gif/angry.gif")
+    .gif("/gif/emoji/angry.gif")
     .type(LikeType.ANGRY)
-    .icon("/images/emoji/angry.png")
+    .icon("/images/emoji/angry.gif")
+    .build(),
+];
+
+export const navItems: NavItem[] = [
+  Builder<NavItem>()
+    .text("home")
+    .href("/")
+    .Icon(MdOutlineHome)
+    .IconActive(MdHome)
+    .build(),
+  Builder<NavItem>()
+    .text("video")
+    .href("/watch")
+    .Icon(MdOutlineVideoLibrary)
+    .IconActive(MdVideoLibrary)
+    .build(),
+  Builder<NavItem>()
+    .text("gaming")
+    .href("/gaming")
+    .Icon(MdOutlineVideogameAsset)
+    .IconActive(MdVideogameAsset)
     .build(),
 ];

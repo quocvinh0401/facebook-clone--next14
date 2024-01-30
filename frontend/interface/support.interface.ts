@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { LikeType } from "./post.interface";
 
 export interface Modal {
@@ -12,4 +13,21 @@ export interface Emoji {
   title: string;
   type: LikeType;
   icon: string;
+}
+
+export interface NavItem {
+  text: string;
+  Icon: IconType;
+  IconActive: IconType;
+  href: string;
+}
+
+export interface Query {
+  filters: any;
+  pagination: QueryPagination;
+}
+
+export interface QueryPagination {
+  page: number;
+  size: number;
 }
