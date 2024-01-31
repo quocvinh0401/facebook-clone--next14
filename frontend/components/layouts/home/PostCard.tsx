@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import CircleAvatar from "~/components/supports/CircleAvatar";
 import GridMedia from "~/components/supports/GridMedia";
+import ReactEmoji from "~/components/supports/ReactionEmoji";
 import { usePatch } from "~/hooks/use-api";
 import { LikeType, Post, PostLike } from "~/interface/post.interface";
 import { RootState } from "~/redux/store";
@@ -18,7 +19,7 @@ const PostCard = ({ post }: Props) => {
 
   const patchPost = usePatch("post", { alert: { isUsed: false } });
 
-  post.likes = post.likes ?? [];
+  post.likes = post?.likes ?? [];
 
   const myLike = post.likes?.find((like) => like.user_id == user.id);
 
@@ -50,7 +51,7 @@ const PostCard = ({ post }: Props) => {
     <div className="container shadow">
       <div className="px-3 py-2">
         <div className="mb-1 flex items-center space-x-2">
-          <CircleAvatar src="/images/avatar.jpg" size={2.25} />
+          <CircleAvatar src="/images/avatar.jpg" size={36} />
           <div className="grow">
             <div className="cursor-pointer font-semibold hover:underline">
               {`${post.user?.first_name} ${post.user?.surname}`}
@@ -79,29 +80,38 @@ const PostCard = ({ post }: Props) => {
             </button>
           </div>
           <div className="flex space-x-2">
-            <button className="text-secondary-content hover:underline">
-              {changeFormNumber(post.count_comment)} comments
-            </button>
+            {post.count_comment > 0 && (
+              <button className="text-secondary-content hover:underline">
+                {changeFormNumber(post.count_comment)}{" "}
+                {post.count_comment > 1 ? "comments" : "comment"}
+              </button>
+            )}
             <button className="text-secondary-content hover:underline">
               59 shares
             </button>
           </div>
         </div>
         <div className="mt-1 grid grid-cols-3">
-          <button
-            onClick={() => handleLike(LikeType.LIKE, true)}
-            className="flex w-full items-center justify-center space-x-1 rounded-lg py-0.5 hover:bg-hover"
-          >
-            <ImageReaction like={myLike!} />
-            <div
-              className={cn(
-                "font-semibold",
-                myLike?.is_like && "text-secondary",
-              )}
+          <div className="group relative overflow-visible">
+            <button
+              onClick={() => handleLike(LikeType.LIKE, true)}
+              className="flex w-full items-center justify-center space-x-1 rounded-lg py-0.5 hover:bg-hover"
             >
-              Like
+              <ImageReaction like={myLike!} />
+              <div
+                className={cn(
+                  "font-semibold",
+                  myLike?.is_like && "text-secondary",
+                )}
+              >
+                Like
+              </div>
+            </button>
+            <div className="absolute bottom-full left-0 w-[150%] translate-y-8 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <ReactEmoji onReact={handleLike} />
             </div>
-          </button>
+          </div>
+
           <button className="flex w-full items-center justify-center space-x-1 rounded-lg py-0.5 hover:bg-hover">
             <Image
               src={"/svgs/comment.svg"}
