@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { PostDTO } from 'data/dtos/post.dto';
 import { PostLikeDTO } from 'data/dtos/post.like.dto';
 import { AuthUser } from 'security/decorators/auth-user.decorator';
@@ -21,8 +29,13 @@ export class PostController {
     return this.service.getAll(payload);
   }
 
+  @Get(':id')
+  async getOne(@Param('id') id: string, @AuthUser() payload: Payload) {
+    return this.service.getOne(+id, payload);
+  }
+
   @Patch('like')
-  async handleLike(@Body() like: PostLikeDTO) {
-    return this.service.handleLike(like);
+  async handleLike(@Body() like: PostLikeDTO, @AuthUser() payload: Payload) {
+    return this.service.handleLike(like, payload);
   }
 }
