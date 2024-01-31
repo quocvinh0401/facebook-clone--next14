@@ -35,6 +35,7 @@ const config: Config = {
       },
       boxShadow: {
         lg: "0 0 16px 1px rgba(0,0,0,.3)",
+        container: "0 0 3px rgba(0,0,0,.1)",
       },
     },
   },

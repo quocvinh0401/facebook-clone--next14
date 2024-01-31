@@ -90,11 +90,13 @@ export class AuthService extends Service {
         });
 
         const payload = Builder<Payload>()
+          .id(user.id)
           .first_name(user.first_name)
           .surname(user.surname)
           .email(user.email)
           .phone(user.phone)
           .dob(user.dob)
+          .avatar(user.avatar)
           .build();
 
         return [this.jwtService.sign(payload), this.mapper.toDTO(user)];
