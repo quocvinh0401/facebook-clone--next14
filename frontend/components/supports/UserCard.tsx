@@ -7,7 +7,7 @@ const UserCard = () => {
 
   return (
     <button className="flex w-full items-center space-x-2 rounded-lg p-2 hover:bg-hover">
-      <CircleAvatar src={user?.avatar || "/images/avatar.jpg"} size={2.25} />
+      <CircleAvatar src={user?.avatar || "/images/avatar.jpg"} size={36} />
       <span className="text-m font-medium">{`${user?.first_name} ${user?.surname}`}</span>
     </button>
   );

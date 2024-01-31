@@ -45,7 +45,7 @@ const MenuLeft = () => {
       {menus.map((item, index) => (
         <button
           key={index}
-          onClick={() => onClickTab(item.href)}
+          // onClick={() => onClickTab(item.href)}
           className="flex w-full  items-center space-x-2 rounded-lg p-2 hover:bg-hover"
         >
           <div

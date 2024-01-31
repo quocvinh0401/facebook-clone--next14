@@ -1,15 +1,16 @@
 import Image from "next/image";
+import { memo } from "react";
 
 interface Props {
   src?: string;
   size?: number;
 }
 
-const CircleAvatar = ({ src, size = 2.5 }: Props) => {
+const CircleAvatar = ({ src, size = 40 }: Props) => {
   return (
     <div
       className="relative cursor-pointer overflow-hidden rounded-full"
-      style={{ width: `${size}rem`, height: `${size}rem` }}
+      style={{ width: `${size}px`, height: `${size}px` }}
     >
       <Image
         src={src || "/images/avatar.jpg"}
@@ -21,4 +22,4 @@ const CircleAvatar = ({ src, size = 2.5 }: Props) => {
     </div>
   );
 };
-export default CircleAvatar;
+export default memo(CircleAvatar);
